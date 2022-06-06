@@ -26,10 +26,10 @@ var (
 	auth, _  = bind.NewKeyedTransactorWithChainID(myKey, big.NewInt(520))
 
 	//自己的地址
-	myAddress = common.HexToAddress("0x4054A37b576d3Ff196cd97Af4C4dc919BDc45218")
+	myAddress = common.HexToAddress("EIP-55地址")
 
 	//自己部署的合约
-	myTokenAddress = common.HexToAddress("0xf089718167F68E40eC96a1503f7128666890BDAa")
+	myTokenAddress = common.HexToAddress("EIP-55合约地址")
 	myToken, _     = token.NewToken(myTokenAddress, blockchain)
 
 	//wPlug地址
@@ -54,8 +54,6 @@ func main() {
 	// buy()
 }
 
-//Address (EIP-55): 0x4054A37b576d3Ff196cd97Af4C4dc919BDc45218
-//Bech32 Acc: gx1gp22x76hd5llr9kdj7h5cnwfrx7ug5scta77h4
 //buy plug兑换token
 func buy() {
 	trans, err := routerContract.SwapExactPLUGForTokens(
