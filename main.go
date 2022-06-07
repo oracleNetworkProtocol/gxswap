@@ -28,7 +28,7 @@ var (
 	//自己的地址
 	myAddress = common.HexToAddress("EIP-55地址")
 
-	//自己部署的合约
+	//需要操作的合约
 	myTokenAddress = common.HexToAddress("EIP-55合约地址")
 	myToken, _     = token.NewToken(myTokenAddress, blockchain)
 
@@ -55,15 +55,15 @@ func main() {
 }
 
 //buy plug兑换token
-func buy() {
+func buy(uplugcnNumber int64, tokenNumber int64) {
 	trans, err := routerContract.SwapExactPLUGForTokens(
 		&bind.TransactOpts{
 			From:     myAddress,
 			Signer:   auth.Signer,
-			Value:    big.NewInt(10000000), //使用的uplugcn数量
+			Value:    big.NewInt(uplugcnNumber), //使用的uplugcn数量
 			GasPrice: big.NewInt(7),
 		},
-		big.NewInt(100000000), //最低要兑换的token数量
+		big.NewInt(tokenNumber), //最低要兑换的token数量
 		[]common.Address{ //交易对合约地址(0:wplug,1:token)
 			wPlugAddress,   //Wrapped Plugcn (WPLUG) 合约地址
 			myTokenAddress, //mytoken 合约地址
@@ -135,17 +135,27 @@ func getPair() common.Address {
 
 //removeLiquidityPLUG 撤资
 func removeLiquidityPLUG() {
+	lpTokenAddress := getPair()
+	lpToken, _ := token.NewToken(lpTokenAddress, blockchain)
 	//授权给lp合约操作权限
-	myToken.Approve(
+	lpToken.Approve(
 		&bind.TransactOpts{
 			From:   myAddress,
 			Signer: auth.Signer,
 			Value:  nil,
 		},
-		getPair(),        //获取lp地址
-		big.NewInt(1000), //授权数量
+		routerContractAddress, //获取lp地址
+		big.NewInt(1000),      //授权数量
 	)
 
+	// lpBalances, err := lpToken.BalanceOf(
+	// 	&bind.CallOpts{
+	// 		From: myAddress,
+	// 	},
+	// 	myAddress,
+	// )
+
+	//如果mytoken的transfer方法有额外的销毁和转账操作需要使用routerContract.RemoveLiquidityPLUGSupportingFeeOnTransferTokens方法
 	trans, err := routerContract.RemoveLiquidityPLUG(
 		&bind.TransactOpts{
 			From:     myAddress,
