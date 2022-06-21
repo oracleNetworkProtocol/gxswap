@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/oracleNetworkProtocol/cosmoswap/contracts/factory"
+	"github.com/oracleNetworkProtocol/cosmoswap/contracts/lp"
 	"github.com/oracleNetworkProtocol/cosmoswap/contracts/router"
 	"github.com/oracleNetworkProtocol/cosmoswap/contracts/token"
 
@@ -95,7 +96,7 @@ func sell() {
 	}
 	fmt.Println(result.Hash().Hex())
 
-	//如果mytoken的transfer方法有额外的销毁和转账操作需要使用routerContract.SwapExactTokensForTokensSupportingFeeOnTransferTokens()
+	//如果mytoken的transfer方法有额外的销毁和转账操作需要使用routerContract.SwapExactTokensForPLUGSupportingFeeOnTransferTokens()
 	trans, err := routerContract.SwapExactTokensForPLUG(
 		&bind.TransactOpts{
 			From:     myAddress,
@@ -136,7 +137,7 @@ func getPair() common.Address {
 //removeLiquidityPLUG 撤资
 func removeLiquidityPLUG() {
 	lpTokenAddress := getPair()
-	lpToken, _ := token.NewToken(lpTokenAddress, blockchain)
+	lpToken, _ := lp.NewCosmoswapPair(lpTokenAddress, blockchain)
 	//授权给lp合约操作权限
 	lpToken.Approve(
 		&bind.TransactOpts{
