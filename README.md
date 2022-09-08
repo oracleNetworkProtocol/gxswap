@@ -1,4 +1,4 @@
-# Cosmoswap
+# Gxswap
 
 Related contract information:
 ```
