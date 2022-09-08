@@ -1,4 +1,4 @@
-module github.com/oracleNetworkProtocol/cosmoswap
+module github.com/oracleNetworkProtocol/gxswap
 
 go 1.18
 
