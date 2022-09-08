@@ -104,9 +104,9 @@ import (
 "math/big"
 "strings"
 
-"github.com/oracleNetworkProtocol/cosmoswap/contracts/factory"
-"github.com/oracleNetworkProtocol/cosmoswap/contracts/router"
-"github.com/oracleNetworkProtocol/cosmoswap/contracts/token"
+"github.com/oracleNetworkProtocol/gxswap/contracts/factory"
+"github.com/oracleNetworkProtocol/gxswap/contracts/router"
+"github.com/oracleNetworkProtocol/gxswap/contracts/token"
 
 "github.com/ethereum/go-ethereum/accounts/abi/bind"
 "github.com/ethereum/go-ethereum/common"
